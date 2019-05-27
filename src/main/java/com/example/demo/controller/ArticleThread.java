@@ -11,7 +11,7 @@ import java.net.URL;
 import java.util.List;
 
 public class ArticleThread implements Runnable {
-    public static final String FILE_PATH = "D:\\novel\\";
+    public static final String FILE_PATH = "D:\\";
 
     private Thread thread;
     private List<Element> articleList;
@@ -52,7 +52,7 @@ public class ArticleThread implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("TIME：" + (System.currentTimeMillis()-startTime)/1000.0/60.0);
+//        System.out.println("TIME：" + (System.currentTimeMillis()-startTime)/1000.0/60.0);
         ArticleController.countDown();
     }
 
@@ -63,11 +63,11 @@ public class ArticleThread implements Runnable {
             Elements h1 = bookName.get(0).getElementsByTag("h1");
             Element content = document.getElementById("content");
             String title = h1.get(0).text();
-//            if (!title.startsWith("第")) {
-//                title = title.substring(title.indexOf("第"));
-//            }
-            fos.write(new String(title + "\r\n").getBytes());
-            fos.write(new String(content.text() + "\r\n").getBytes());
+            if (!title.startsWith("第")) {
+                title = title.substring(title.indexOf("第"));
+            }
+            fos.write((title + "\r\n").getBytes());
+            fos.write((content.text() + "\r\n").getBytes());
 
 //            System.out.println(this.name + "-----------" + h1.get(0).text());
         } catch (IOException e) {

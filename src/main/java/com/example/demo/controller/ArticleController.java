@@ -4,12 +4,14 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -20,6 +22,8 @@ import java.util.concurrent.CountDownLatch;
 
 public class ArticleController {
 
+//    https://www.biquge.biz/12_12453/    我的绝色总裁未婚妻
+//    https://www.biquge.biz/22_22884/    女总裁的神级高手
     // 小说URL
     private static final String BOOK_URL = "https://www.biquge.biz/22_22884/";
 
@@ -39,6 +43,7 @@ public class ArticleController {
     private static List<String> bookName = new ArrayList();
 
     public static void main(String[] args) {
+        System.out.println("开始时间：" + new Date(System.currentTimeMillis()));
         downloadNovel();
         threadCount = new CountDownLatch(count - 1);
         try {
@@ -47,10 +52,12 @@ public class ArticleController {
             e.printStackTrace();
         }
         for (int i = 0; i < bookName.size(); i++){
+            // 合并小说
             merging(bookName.get(i));
+            // 删除临时文件
             delete(bookName.get(i));
         }
-
+        System.out.println("结束时间：" + new Date(System.currentTimeMillis()));
     }
 
     /**
@@ -105,7 +112,7 @@ public class ArticleController {
         File file = new File(filePath);
         if (file.exists() && file.isFile()) {
             if (file.delete()) {
-                System.out.println("删除单个文件" + filePath + "成功！");
+//                System.out.println("删除单个文件" + filePath + "成功！");
             } else {
                 System.out.println("删除单个文件" + filePath + "失败！");
             }
@@ -139,6 +146,12 @@ public class ArticleController {
 
     public static void countDown() {
         threadCount.countDown();
+    }
+
+    @Test
+    public void test(){
+        String str = "3169.第3169章 玄仙术";
+        System.out.println(str.substring(str.indexOf("第")));
     }
 
 }

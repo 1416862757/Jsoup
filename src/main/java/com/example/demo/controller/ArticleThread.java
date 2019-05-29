@@ -63,9 +63,9 @@ public class ArticleThread implements Runnable {
             Elements h1 = bookName.get(0).getElementsByTag("h1");
             Element content = document.getElementById("content");
             String title = h1.get(0).text();
-            if (!title.startsWith("第")) {
-                title = title.substring(title.indexOf("第"));
-            }
+//            if (!title.startsWith("第")) {
+//                title = title.substring(title.indexOf("第"));
+//            }
             fos.write((title + "\r\n").getBytes());
             fos.write((content.text() + "\r\n").getBytes());
 

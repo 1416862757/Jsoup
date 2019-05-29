@@ -24,11 +24,12 @@ public class ArticleController {
 
 //    https://www.biquge.biz/12_12453/    我的绝色总裁未婚妻
 //    https://www.biquge.biz/22_22884/    女总裁的神级高手
+//    https://www.biquge.biz/5_5164/    圣墟
     // 小说URL
-    private static final String BOOK_URL = "https://www.biquge.biz/22_22884/";
+    private static final String BOOK_URL = "https://www.biquge.biz/5_5164/";
 
     // 小说名称
-    private static final String BOOK_NAME = "女总裁的神级高手";
+    private static final String BOOK_NAME = "圣墟";
 
     // 下载速度 100 - 500   值越小   速度越快  一个线程下载多少本
     private static final Integer SPEED = 100;

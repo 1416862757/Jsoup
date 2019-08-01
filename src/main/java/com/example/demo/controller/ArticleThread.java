@@ -24,15 +24,15 @@ public class ArticleThread implements Runnable {
         this.name = name;
         this.startTime = startTime;
         try {
-            fos = new FileOutputStream(ArticleThread.FILE_PATH  + name + ".txt");
+            fos = new FileOutputStream(ArticleThread.FILE_PATH + name + ".txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void start(){
-        if (thread == null){
+    public void start() {
+        if (thread == null) {
             thread = new Thread(this);
             thread.start();
         }
@@ -41,8 +41,16 @@ public class ArticleThread implements Runnable {
     @Override
     public void run() {
 
-        for(int i = 0; i < articleList.size(); i++){
-            String articleUrl = "https://www.biquge.biz" + articleList.get(i).attr("href");
+        for (int i = 0; i < articleList.size(); i++) {
+            if (name.equals("book1")) {
+                System.out.println("已完成：" + (i + 1) + "%");
+            }
+            String articleUrl = null;
+            if (ArticleController.PLAT.equals("KY")) {
+                articleUrl = "https://www.kuaiyankanshu.net" + articleList.get(i).attr("href");
+            } else {
+                articleUrl = "https://www.biquge.biz" + articleList.get(i).attr("href");
+            }
             writeArticle(articleUrl);
         }
         try {
@@ -56,17 +64,26 @@ public class ArticleThread implements Runnable {
         ArticleController.countDown();
     }
 
-    public void writeArticle(String articleUrl){
+    public void writeArticle(String articleUrl) {
         try {
             Document document = Jsoup.parse(new URL(articleUrl), 1000000);
-            Elements bookName = document.getElementsByClass("bookname");
-            Elements h1 = bookName.get(0).getElementsByTag("h1");
-            Element content = document.getElementById("content");
+            Elements h1 = null;
+            Element content = null;
+            if (ArticleController.PLAT.equals("KY")) {
+                Elements bookName = document.getElementsByClass("title");
+                h1 = bookName.get(0).getElementsByTag("h1");
+                content = document.getElementById("chaptercontent");
+            } else {
+                Elements bookName = document.getElementsByClass("title");
+                h1 = bookName.get(0).getElementsByTag("h1");
+                content = document.getElementById("chaptercontent");
+
+            }
             String title = h1.get(0).text();
-//            if (!title.startsWith("第")) {
-//                title = title.substring(title.indexOf("第"));
-//            }
-            fos.write((title + "\r\n").getBytes());
+            if (!title.startsWith("第")) {
+                title = title.substring(title.indexOf("第"));
+            }
+//            fos.write((title + "\r\n").getBytes());
             fos.write((content.text() + "\r\n").getBytes());
 
 //            System.out.println(this.name + "-----------" + h1.get(0).text());

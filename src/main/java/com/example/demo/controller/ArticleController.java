@@ -26,10 +26,12 @@ public class ArticleController {
 //    https://www.biquge.biz/22_22884/    女总裁的神级高手
 //    https://www.biquge.biz/5_5164/    圣墟
     // 小说URL
-    private static final String BOOK_URL = "https://www.biquge.biz/5_5164/";
+    private static final String BOOK_URL = "https://www.kuaiyankanshu.net/130232/dir.html";
 
     // 小说名称
-    private static final String BOOK_NAME = "圣墟";
+    private static final String BOOK_NAME = "斗罗大陆";
+
+    public static final String PLAT = "KY";
 
     // 下载速度 100 - 500   值越小   速度越快  一个线程下载多少本
     private static final Integer SPEED = 100;
@@ -129,8 +131,14 @@ public class ArticleController {
         long start = System.currentTimeMillis();
         try {
             Document document = Jsoup.parse(new URL(BOOK_URL), 100000);
-            Element list = document.getElementById("list");
-            Elements li = list.getElementsByTag("a");
+            Elements li = null;
+            if (PLAT.equals("KY")){
+                Elements list = document.getElementsByClass("dirlist");
+                li = list.get(0).getElementsByTag("a");
+            } else {
+                Element list = document.getElementById("list");
+                li = list.getElementsByTag("a");
+            }
 
             for (int i = 0; i < li.size(); i += SPEED) {
                 int end = i + SPEED;

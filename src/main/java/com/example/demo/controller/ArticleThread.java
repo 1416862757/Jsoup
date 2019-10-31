@@ -74,16 +74,23 @@ public class ArticleThread implements Runnable {
                 h1 = bookName.get(0).getElementsByTag("h1");
                 content = document.getElementById("chaptercontent");
             } else {
-                Elements bookName = document.getElementsByClass("title");
+                Elements bookName = document.getElementsByClass("bookname");
                 h1 = bookName.get(0).getElementsByTag("h1");
-                content = document.getElementById("chaptercontent");
+                content = document.getElementById("content");
 
             }
             String title = h1.get(0).text();
-            if (!title.startsWith("第")) {
-                title = title.substring(title.indexOf("第"));
+            if (!title.startsWith("第") && title.contains("第")) {
+                try {
+                    title = title.substring(title.indexOf("第"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println(title);
+                }
+            } else {
+                title = "第" + title;
             }
-//            fos.write((title + "\r\n").getBytes());
+            fos.write((title + "\r\n").getBytes());
             fos.write((content.text() + "\r\n").getBytes());
 
 //            System.out.println(this.name + "-----------" + h1.get(0).text());

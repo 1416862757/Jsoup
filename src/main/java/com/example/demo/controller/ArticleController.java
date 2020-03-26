@@ -27,10 +27,10 @@ public class ArticleController {
 //    https://www.biquge.biz/5_5164/    圣墟
 //    https://www.biquge.biz/4_4369/    逆天透视眼
     // 小说URL
-    private static final String BOOK_URL = "https://www.biquge.biz/4_4369/";
+    private static final String BOOK_URL = "https://www.biquge.biz/22_22884/";
 
     // 小说名称
-    private static final String BOOK_NAME = "逆天透视眼";
+    private static final String BOOK_NAME = "女总裁的神级高手";
 
 //    public static final String PLAT = "KY";
     public static final String PLAT = "";
@@ -117,7 +117,7 @@ public class ArticleController {
         File file = new File(filePath);
         if (file.exists() && file.isFile()) {
             if (file.delete()) {
-//                System.out.println("删除单个文件" + filePath + "成功！");
+                System.out.println("删除单个文件" + filePath + "成功！");
             } else {
                 System.out.println("删除单个文件" + filePath + "失败！");
             }
